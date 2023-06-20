@@ -1,19 +1,22 @@
 body{
-  background-image: url("../public/fantasy-background.jpg");
+  background-image: url("../public/fantasy-background2.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: cover; 
   margin:0;
+  height: 100vh; 
+  
 }
 
 .app{
  
-  display: flex;
-  padding:20px;
-  justify-content: center;
+  display:grid;
+  align-items: center; /* Vertically align items */
+  justify-content: center; /* Horizontally align items */
+  padding:0px;
   margin:0;
-  align-items : center;
+  height: 100vh; 
 
 }
 
@@ -24,7 +27,7 @@ body{
   flex-wrap: wrap;
   align-self:center;
   border-width: 10px;
-  border-color: rgb(0,0,0,20%);
+  border-color: rgb(250,250,250,20%);
   border-style: groove;
 }
 
