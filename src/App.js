@@ -1,7 +1,12 @@
+import React, { useState, useEffect } from "react";
+
 const width = 8;
 const candyColors = ["blue", "green", "orange", "purple", "red", "yellow"];
 
 const App = () => {
+  // eslint-disable-next-line no-undef
+  const [currentColorArrangement, setCurrentColorArrangement] = useState([]);
+
   const createBoard = () => {
     const randomColorArrangement = [];
 
@@ -13,10 +18,26 @@ const App = () => {
       randomColorArrangement.push(randomColor);
     }
 
-    console.log(randomColorArrangement);
-
-    return <div></div>;
+    setCurrentColorArrangement(randomColorArrangement);
   };
+
+  useEffect(() => {
+    createBoard();
+  }, []);
+
+  return (
+    <div className="app">
+      <div className="game">
+        {currentColorArrangement.map((candyColor, index) => (
+          <img
+            key={index}
+            style={{ backgroundColor: candyColor }}
+            alt={candyColor}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default App;
