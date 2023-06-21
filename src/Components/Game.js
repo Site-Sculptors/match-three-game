@@ -1,7 +1,12 @@
 import React from "react";
 import "../index.css";
 
-const Game = ({ currentTileArrangement, dragStart, dragDrop, dragEnd }) => {
+export const Game = ({
+  currentTileArrangement,
+  dragStart,
+  dragDrop,
+  dragEnd,
+}) => {
   return (
     <div className="game">
       {currentTileArrangement.map((tile, index) => (
@@ -23,5 +28,3 @@ const Game = ({ currentTileArrangement, dragStart, dragDrop, dragEnd }) => {
     </div>
   );
 };
-
-export default Game;

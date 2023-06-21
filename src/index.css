@@ -16,22 +16,53 @@ body {
   margin: 0;
   height: 100vh;
 }
-
-.game {
-  padding: 10px;
-  width: 560px;
-  height: 560px;
+/* .gameHolder {
+  width: 590px;
+  height: 590px;
   display: flex;
   flex-wrap: wrap;
   align-self: center;
-  border-width: 10px;
+}
+*/
+
+.game {
+  position: absolute; /* Add absolute positioning */
+  width: 590px;
+  height: 590px;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  /* border-width: 10px;
   border-color: rgb(250, 250, 250, 20%);
-  border-style: groove;
+  border-style: groove; */
+}
+
+.gameHolder {
+  width: 590px;
+  height: 590px;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  gap: 0px;
+}
+
+.gameHolder img {
+  width: 80px;
+  height: 80px;
+  margin: 0px;
 }
 
 .game img {
   width: 70px;
   height: 70px;
+  margin: 1px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.game img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 0.75rem rgb(255, 217, 0, 80%));
 }
 
 .scoreBoard {
