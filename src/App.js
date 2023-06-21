@@ -1,25 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
+import Game from "./Components/Game";
+import { checkForColumnOfFour } from "./Logic/checkForColumnOfFour";
+import { checkForRowOfFour } from "./Logic/checkForRowOfFour";
+import { checkForColumnOfThree } from "./Logic/checkForColumnOfThree";
+import { checkForRowOfThree } from "./Logic/checkForRowOfThree";
+
 import "./index.css";
 import Scoreboard from "./Components/ScoreBoard";
 import Blank from "./Images/blank.png";
-import BlueTile from "./Images/blue-candy.png";
-import GreenTile from "./Images/green-candy.png";
-import OrangeTile from "./Images/orange-candy.png";
-import PurpleTile from "./Images/purple-candy.png";
-import RedTile from "./Images/red-candy.png";
-import YellowTile from "./Images/yellow-candy.png";
+import tiles from "./Types/tiles";
 
 const width = 8;
-//const candyColors = ["blue", "green", "orange", "purple", "red", "yellow"];
-const tiles = [
-  BlueTile,
-  GreenTile,
-  OrangeTile,
-  PurpleTile,
-  RedTile,
-  YellowTile,
-];
 
 const App = () => {
   // eslint-disable-next-line no-undef
@@ -27,7 +19,7 @@ const App = () => {
   const [tileBeingDragged, setTileBeingDragged] = useState(null);
   const [tileBeingReplaced, setTileBeingReplaced] = useState(null);
   const [score, setScore] = useState(0);
-
+  /* 
   const checkForColumnOfFour = () => {
     for (let i = 0; i <= 39; i++) {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
@@ -115,7 +107,7 @@ const App = () => {
         return true;
       }
     }
-  };
+  }; */
 
   const moveIntoSpaceBelow = () => {
     for (let i = 0; i <= 55; i++) {
@@ -175,10 +167,30 @@ const App = () => {
 
     const validMove = validMoves.includes(tileBeingReplacedId);
 
-    const isARowOfFour = checkForRowOfFour();
-    const isAColumnOfFour = checkForColumnOfFour();
-    const isARowOfThree = checkForRowOfThree();
-    const isAColumnOfThree = checkForColumnOfThree();
+    const isARowOfFour = checkForRowOfFour({
+      currentTileArrangement,
+      width,
+      Blank,
+      setScore,
+    });
+    const isAColumnOfFour = checkForColumnOfFour({
+      currentTileArrangement,
+      width,
+      Blank,
+      setScore,
+    });
+    const isARowOfThree = checkForRowOfThree({
+      currentTileArrangement,
+      width,
+      Blank,
+      setScore,
+    });
+    const isAColumnOfThree = checkForColumnOfThree({
+      currentTileArrangement,
+      width,
+      Blank,
+      setScore,
+    });
 
     if (
       tileBeingReplacedId &&
@@ -245,10 +257,10 @@ const App = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      checkForColumnOfFour();
-      checkForRowOfFour();
-      checkForColumnOfThree();
-      checkForRowOfThree();
+      checkForColumnOfFour({ currentTileArrangement, width, Blank, setScore });
+      checkForRowOfFour({ currentTileArrangement, width, Blank, setScore });
+      checkForColumnOfThree({ currentTileArrangement, width, Blank, setScore });
+      checkForRowOfThree({ currentTileArrangement, width, Blank, setScore });
       moveIntoSpaceBelow();
       setCurrentTileArrangement([...currentTileArrangement]);
     }, 100);
@@ -264,7 +276,13 @@ const App = () => {
 
   return (
     <div className="app">
-      <div className="game">
+      <Game
+        currentTileArrangement={currentTileArrangement}
+        dragStart={dragStart}
+        dragDrop={dragDrop}
+        dragEnd={dragEnd}
+      />
+      {/*  <div className="game">
         {currentTileArrangement.map((tile, index) => (
           <img
             key={index}
@@ -281,7 +299,7 @@ const App = () => {
             onDragEnd={dragEnd}
           />
         ))}
-      </div>
+      </div> */}
       <div>
         <Scoreboard score={score} />
       </div>
