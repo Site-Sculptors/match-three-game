@@ -20,14 +20,14 @@ export const GameHolder = ({
 
   const createBackground = () => {
     const tiles = [];
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < width * width; i++) {
       tiles.push(BackgroundTile);
     }
     setBackgroundTileArrangement(tiles);
   };
 
   return (
-    <div className="game">
+    <div className="gameHolder">
       {backgroundTileArrangement.map((backgroundTile, index) => (
         <img src={backgroundTile} alt={`Tile ${index}`} key={index} />
       ))}
