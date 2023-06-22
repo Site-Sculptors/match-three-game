@@ -42,17 +42,51 @@ const App = () => {
     setTileBeingDragged(e.target);
   };
 
+  const touchStart = (e) => {
+    console.log("touch start");
+    const touch = e.touches[0];
+    const target = e.currentTarget;
+    const index = parseInt(target.getAttribute("data-id"), 10);
+
+    setTileBeingDragged(target);
+    target.setAttribute("data-touch-start-x", touch.clientX);
+    target.setAttribute("data-touch-start-y", touch.clientY);
+    target.setAttribute("data-touch-index", index);
+  };
+
   const dragDrop = (e) => {
     console.log("drag drop");
     setTileBeingReplaced(e.target);
   };
 
+  const touchMove = (e) => {
+    console.log("touch move");
+    const touch = e.touches[0];
+    const target = e.currentTarget;
+    const startX = parseInt(target.getAttribute("data-touch-start-x"), 10);
+    const startY = parseInt(target.getAttribute("data-touch-start-y"), 10);
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+
+    // Perform any touch move logic you need
+
+    e.preventDefault();
+  };
+
+  const touchEnd = (e) => {
+    console.log("touch end");
+    const target = e.currentTarget;
+    const tileBeingDraggedId = parseInt(
+      target.getAttribute("data-touch-index"),
+      10
+    );
+
+    // Perform any touch end logic you need
+
+    e.preventDefault();
+  };
+
   const dragEnd = () => {
-    console.log("drag end");
-
-    // if (tileBeingDragged === tileBeingReplaced) {
-    //   return;
-
     const tileBeingDraggedId = parseInt(
       tileBeingDragged.getAttribute("data-id")
     );
@@ -60,14 +94,6 @@ const App = () => {
     const tileBeingReplacedId = parseInt(
       tileBeingReplaced.getAttribute("data-id")
     );
-
-    currentTileArrangement[tileBeingReplacedId] =
-      tileBeingDragged.getAttribute("src");
-    currentTileArrangement[tileBeingDraggedId] =
-      tileBeingReplaced.getAttribute("src");
-
-    console.log("tileBeingDragged", tileBeingDraggedId);
-    console.log("tileBeingReplaced", tileBeingReplacedId);
 
     const validMoves = [
       tileBeingDraggedId - 1,
@@ -78,50 +104,63 @@ const App = () => {
 
     const validMove = validMoves.includes(tileBeingReplacedId);
 
-    const isARowOfFour = checkForRowOfFour({
-      currentTileArrangement,
-      width,
-      Blank,
-      setScore,
-    });
-    const isAColumnOfFour = checkForColumnOfFour({
-      currentTileArrangement,
-      width,
-      Blank,
-      setScore,
-    });
-    const isARowOfThree = checkForRowOfThree({
-      currentTileArrangement,
-      width,
-      Blank,
-      setScore,
-    });
-    const isAColumnOfThree = checkForColumnOfThree({
-      currentTileArrangement,
-      width,
-      Blank,
-      setScore,
-    });
-
-    if (
-      tileBeingReplacedId &&
-      validMove &&
-      (isARowOfFour || isAColumnOfFour || isARowOfThree || isAColumnOfThree)
-    ) {
-      setTileBeingDragged(null);
-      setTileBeingReplaced(null);
-    } else {
+    if (validMove) {
       currentTileArrangement[tileBeingReplacedId] =
-        tileBeingReplaced.getAttribute("src");
-      currentTileArrangement[tileBeingDraggedId] =
         tileBeingDragged.getAttribute("src");
+      currentTileArrangement[tileBeingDraggedId] =
+        tileBeingReplaced.getAttribute("src");
 
-      setCurrentTileArrangement([...currentTileArrangement]);
+      const isARowOfFour = checkForRowOfFour({
+        currentTileArrangement,
+        width,
+        Blank,
+        setScore,
+      });
+      const isAColumnOfFour = checkForColumnOfFour({
+        currentTileArrangement,
+        width,
+        Blank,
+        setScore,
+      });
+      const isARowOfThree = checkForRowOfThree({
+        currentTileArrangement,
+        width,
+        Blank,
+        setScore,
+      });
+      const isAColumnOfThree = checkForColumnOfThree({
+        currentTileArrangement,
+        width,
+        Blank,
+        setScore,
+      });
+
+      if (
+        tileBeingReplacedId &&
+        validMove &&
+        (isARowOfFour || isAColumnOfFour || isARowOfThree || isAColumnOfThree)
+      ) {
+        setTileBeingDragged(null);
+        setTileBeingReplaced(null);
+      } else {
+        currentTileArrangement[tileBeingReplacedId] =
+          tileBeingReplaced.getAttribute("src");
+        currentTileArrangement[tileBeingDraggedId] =
+          tileBeingDragged.getAttribute("src");
+
+        setCurrentTileArrangement([...currentTileArrangement]);
+      }
     }
   };
 
   const createBoard = () => {
-    setScore(0);
+    let tempScore;
+    if (score != null) {
+      tempScore = score;
+    } else {
+      tempScore = 0;
+    }
+
     const randomTileArrangement = [];
 
     for (let i = 0; i < width * width; i++) {
@@ -135,6 +174,8 @@ const App = () => {
     if (!hasValidMoves) {
       createBoard();
     }
+
+    setScore(tempScore);
   };
 
   const hasValidMoves = (currentTileArrangement, width) => {
@@ -195,6 +236,9 @@ const App = () => {
         dragStart={dragStart}
         dragDrop={dragDrop}
         dragEnd={dragEnd}
+        touchStart={touchStart}
+        touchMove={touchMove}
+        touchEnd={touchEnd}
         width={width}
       />
       <div>

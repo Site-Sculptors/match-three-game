@@ -6,6 +6,9 @@ export const Game = ({
   dragStart,
   dragDrop,
   dragEnd,
+  touchStart,
+  touchMove,
+  touchEnd,
 }) => {
   return (
     <div className="game">
@@ -23,8 +26,14 @@ export const Game = ({
           onDragLeave={(e) => e.preventDefault()}
           onDrop={dragDrop}
           onDragEnd={dragEnd}
+          onTouchStart={touchStart}
+          onTouchMove={touchMove}
+          onTouchEnd={touchEnd}
+          onTouchCancel={touchEnd}
         />
       ))}
     </div>
   );
 };
+
+// Rest of your code...
