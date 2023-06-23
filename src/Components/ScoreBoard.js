@@ -4,7 +4,7 @@ import "../index.css";
 const ScoreBoard = ({ score }) => {
   return (
     <div className="scoreBoard">
-      <h1 className="scoreDisplay">Score: {score}</h1>
+      <h1 className="scoreDisplay">{score}</h1>
     </div>
   );
 };
