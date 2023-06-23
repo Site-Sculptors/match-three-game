@@ -1,8 +1,4 @@
-export const checkForRowOfThree = ({
-  currentTileArrangement,
-  Blank,
-  setScore,
-}) => {
+export const checkForRowOfThree = ({ currentTileArrangement, Blank }) => {
   if (!currentTileArrangement) {
     return; // or handle the case when the currentTileArrangement is undefined
   }
@@ -23,9 +19,9 @@ export const checkForRowOfThree = ({
         (tile) => currentTileArrangement[tile] === decidedTile && !isBlank
       )
     ) {
-      setScore((score) => score + 3);
-      rowOfThree.forEach((tile) => (currentTileArrangement[tile] = Blank));
-      return true;
+      /* setScore((score) => score + 3);
+      rowOfThree.forEach((tile) => (currentTileArrangement[tile] = Blank)); */
+      return rowOfThree; //true;
     }
   }
 };

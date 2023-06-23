@@ -1,0 +1,57 @@
+.gameHolder {
+  align-self: center;
+  border: 10px groove hsla(0, 0%, 98%, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  height: 590px;
+  padding: 0;
+  width: 580px;
+}
+
+.gameHolder img {
+  width: 72px;
+  height: 72px;
+  margin: 0px;
+  opacity: 90%;
+}
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  height: 590px;
+  position: absolute;
+  width: 590px;
+}
+
+.game img {
+  width: 71px;
+  height: 71px;
+  margin: 1px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.game img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 0.75rem rgb(255, 217, 0, 80%));
+}
+
+/* 
+.gameHolder {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-gap: 0px;
+  max-width: 100%;
+}
+
+
+.game {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-gap: 0px;
+  max-width: 100%;
+} */
