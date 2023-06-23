@@ -1,6 +1,5 @@
 import React from "react";
-import "../Styles/scoreBoard.css";
-import ScoreBoardImage from "../Images/score-board.png";
+import "../Styles/index.css";
 
 const ScoreBoard = ({ score }) => {
   return (

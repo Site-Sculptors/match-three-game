@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Game } from "./Game";
 import BackgroundTile from "../Images/background-tile.png";
-import "../Styles/gameHolder.css";
+import "../Styles/index.css";
 
 export const GameHolder = ({
   currentTileArrangement,
@@ -27,17 +27,19 @@ export const GameHolder = ({
   };
 
   return (
+    <div className="app" >
     <div className="gameHolder">
-      {backgroundTileArrangement.map((backgroundTile, index) => (
+     {/* {backgroundTileArrangement.map((backgroundTile, index) => (
         <img src={backgroundTile} alt={`Tile ${index}`} key={index} />
-      ))}
+      ))} */}
       <Game
         currentTileArrangement={currentTileArrangement}
         dragStart={dragStart}
         dragDrop={dragDrop}
         dragEnd={dragEnd}
-        tilesPerRowOrColumn={tilesPerRowOrColumn}
+        width={tilesPerRowOrColumn}
       />
+    </div>
     </div>
   );
 };

@@ -1,63 +1,78 @@
 body {
+  padding: 0px;
+  margin: 0px;
+}
+
+.hamburger-icon {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.hamburger-icon:hover {
+  scale: 110%;
+}
+
+/* @media (max-width: 1000px) { */
+.gameBoard {
   background-image: url("../../public/fantasy-background2.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
   margin: 0;
-  height: 100vh;
-}
-
-.app {
   display: flex;
+  flex-direction: column;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100%;
 }
-.gameBoard {
-  display: flex;
-  align-items: center; /* Vertically align items */
-  justify-content: center; /* Horizontally align items */
-  padding: 0px;
-  margin: 0;
-  height: 100vh;
-}
 
-@media (max-width: 1000px) {
-  .app {
-    flex-direction: column-reverse;
-  }
-
-  .Scoreboard {
-    position: relative;
-    margin: 10px auto;
-    transform: none;
-  }
-}
-/*
 .gameHolder {
-   background-color: rgb(0, 0, 0, 60%);
-  width: 580px;
-  height: 590px;
+  /* background-color: rgba(0, 0, 0, 20%); Updated RGBA value */
+
   display: flex;
   flex-wrap: wrap;
-  align-self: center;
+  margin-top: 110px;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   gap: 0px;
   padding: 0px;
-  border-width: 10px;
-  border-color: rgb(250, 250, 250, 20%);
-  border-style: groove;
+  /* border-width: 10px;
+  border-color: rgba(250, 250, 250, 0.2); /* Updated RGBA value 
+  border-style: groove; */
 }
- */
 
-<<<<<<< HEAD:src/index.css
 .gameHolder img {
   width: 72px;
   height: 72px;
   margin: 0px;
   opacity: 90%;
+}
+
+.game {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-gap: 0px;
+  max-width: 100%;
+}
+
+.game img {
+  /* width: calc(100% / 8);
+  height: calc(100% / 8); */
+  max-width: 100%; /* Added property */
+  max-height: 100%; /* Added property */
+  margin: 1px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  align-self: center;
 }
 
 .game img:hover {
@@ -67,18 +82,36 @@ body {
 
 .scoreBoard {
   position: absolute;
-  top: 0;
-  right: 0;
-  margin: 30px;
-  background-image: url("./Images/score-board.png");
+  background-image: url("../Images/score-board.png");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100px;
+  height: 80px;
   width: 200px;
   padding: 0px;
-  justify-content: center;
-  float: right !important;
-  padding: 0px;
+  top: 50px;
+  /* left: 50%; */
+  justify-self: center;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 1000px) {
+  .scoreBoard {
+    top: 10px;
+    height: 100px;
+    width: 200px;
+    right: 0px; /* Position at the top-right corner */
+    transform: none; /* Adjust positioning */
+  }
+
+  .game img {
+    width: 73px;
+    height: 73px;
+  }
+
+  .gameHolder {
+    margin: 0px;
+    /* background-color: rgba(0, 0, 0, 100%); Updated RGBA value */
+  }
 }
 
 .scoreDisplay {
@@ -90,21 +123,3 @@ body {
   justify-self: center;
   margin: 0px;
 }
-
-@media (max-width: 1000px) {
-  .Scoreboard {
-    position: relative;
-    margin: 10px auto;
-    transform: none;
-  }
-}
-=======
-/* .game {
-  position: absolute; 
-  width: 590px;
-  height: 590px;
-  display: flex;
-  flex-wrap: wrap;
-  align-self: center;
-} */
->>>>>>> Test:src/Styles/index.css
