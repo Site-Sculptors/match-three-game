@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { GameHolder } from "./Components/GameHolder";
-import { checkForColumnOfFour } from "./Logic/checkForColumnOfFour";
+import { checkForMatches } from "./Logic/checkForMatches";
+/* import { checkForColumnOfFour } from "./Logic/checkForColumnOfFour";
 import { checkForRowOfFour } from "./Logic/checkForRowOfFour";
 import { checkForColumnOfThree } from "./Logic/checkForColumnOfThree";
-import { checkForRowOfThree } from "./Logic/checkForRowOfThree";
+import { checkForRowOfThree } from "./Logic/checkForRowOfThree"; */
 
-import "./index.css";
+import "./Styles/index.css";
 import Scoreboard from "./Components/ScoreBoard";
 import Blank from "./Images/blank.png";
 import tiles from "./Types/tiles";
 
-const width = 8;
+const tilesPerRowOrColumn = 8;
 
-const App = () => {
+export const App = () => {
   // eslint-disable-next-line no-undef
   const [currentTileArrangement, setCurrentTileArrangement] = useState([]);
   const [tileBeingDragged, setTileBeingDragged] = useState(null);
@@ -30,8 +31,9 @@ const App = () => {
         currentTileArrangement[i] = tiles[randomNumber];
       }
 
-      if (currentTileArrangement[i + width] === Blank) {
-        currentTileArrangement[i + width] = currentTileArrangement[i];
+      if (currentTileArrangement[i + tilesPerRowOrColumn] === Blank) {
+        currentTileArrangement[i + tilesPerRowOrColumn] =
+          currentTileArrangement[i];
         currentTileArrangement[i] = Blank;
       }
     }
@@ -97,9 +99,9 @@ const App = () => {
 
     const validMoves = [
       tileBeingDraggedId - 1,
-      tileBeingDraggedId - width,
+      tileBeingDraggedId - tilesPerRowOrColumn,
       tileBeingDraggedId + 1,
-      tileBeingDraggedId + width,
+      tileBeingDraggedId + tilesPerRowOrColumn,
     ];
 
     const validMove = validMoves.includes(tileBeingReplacedId);
@@ -110,35 +112,49 @@ const App = () => {
       currentTileArrangement[tileBeingDraggedId] =
         tileBeingReplaced.getAttribute("src");
 
-      const isARowOfFour = checkForRowOfFour({
+      const isAMatch = checkForMatches({
         currentTileArrangement,
-        width,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+
+      /*     const isARowOfFour = checkForMatches({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+
+    const isARowOfFour = checkForRowOfFour({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
         Blank,
         setScore,
       });
       const isAColumnOfFour = checkForColumnOfFour({
         currentTileArrangement,
-        width,
+        tilesPerRowOrColumn,
         Blank,
         setScore,
       });
       const isARowOfThree = checkForRowOfThree({
         currentTileArrangement,
-        width,
+        tilesPerRowOrColumn,
         Blank,
         setScore,
       });
       const isAColumnOfThree = checkForColumnOfThree({
         currentTileArrangement,
-        width,
+        tilesPerRowOrColumn,
         Blank,
         setScore,
       });
-
+ */
       if (
         tileBeingReplacedId &&
         validMove &&
-        (isARowOfFour || isAColumnOfFour || isARowOfThree || isAColumnOfThree)
+        isAMatch //isARowOfFour || isAColumnOfFour || isARowOfThree || isAColumnOfThree)
       ) {
         setTileBeingDragged(null);
         setTileBeingReplaced(null);
@@ -163,7 +179,7 @@ const App = () => {
 
     const randomTileArrangement = [];
 
-    for (let i = 0; i < width * width; i++) {
+    for (let i = 0; i < tilesPerRowOrColumn * tilesPerRowOrColumn; i++) {
       const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
 
       randomTileArrangement.push(randomTile);
@@ -178,9 +194,9 @@ const App = () => {
     setScore(tempScore);
   };
 
-  const hasValidMoves = (currentTileArrangement, width) => {
-    const numRows = width;
-    const numCols = width;
+  const hasValidMoves = (currentTileArrangement, tilesPerRowOrColumn) => {
+    const numRows = tilesPerRowOrColumn;
+    const numCols = tilesPerRowOrColumn;
 
     // Iterate over each cell in the board
     for (let row = 0; row < numRows; row++) {
@@ -188,15 +204,15 @@ const App = () => {
         // Check for valid moves to the right and down from the current cell
         if (
           (col + 2 < numCols &&
-            currentTileArrangement[row * width + col] ===
-              currentTileArrangement[row * width + col + 1] &&
-            currentTileArrangement[row * width + col] ===
-              currentTileArrangement[row * width + col + 2]) ||
+            currentTileArrangement[row * tilesPerRowOrColumn + col] ===
+              currentTileArrangement[row * tilesPerRowOrColumn + col + 1] &&
+            currentTileArrangement[row * tilesPerRowOrColumn + col] ===
+              currentTileArrangement[row * tilesPerRowOrColumn + col + 2]) ||
           (row + 2 < numRows &&
-            currentTileArrangement[row * width + col] ===
-              currentTileArrangement[(row + 1) * width + col] &&
-            currentTileArrangement[row * width + col] ===
-              currentTileArrangement[(row + 2) * width + col])
+            currentTileArrangement[row * tilesPerRowOrColumn + col] ===
+              currentTileArrangement[(row + 1) * tilesPerRowOrColumn + col] &&
+            currentTileArrangement[row * tilesPerRowOrColumn + col] ===
+              currentTileArrangement[(row + 2) * tilesPerRowOrColumn + col])
         ) {
           return true; // Found a valid move
         }
@@ -212,40 +228,67 @@ const App = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      checkForColumnOfFour({ currentTileArrangement, width, Blank, setScore });
-      checkForRowOfFour({ currentTileArrangement, width, Blank, setScore });
-      checkForColumnOfThree({ currentTileArrangement, width, Blank, setScore });
-      checkForRowOfThree({ currentTileArrangement, width, Blank, setScore });
+      checkForMatches({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+      /*   checkForColumnOfFour({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+      checkForRowOfFour({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+      checkForColumnOfThree({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      });
+      checkForRowOfThree({
+        currentTileArrangement,
+        tilesPerRowOrColumn,
+        Blank,
+        setScore,
+      }); */
       moveIntoSpaceBelow();
       setCurrentTileArrangement([...currentTileArrangement]);
     }, 90);
     return () => clearInterval(timer);
   }, [
-    checkForColumnOfFour,
-    checkForRowOfFour,
-    checkForColumnOfThree,
-    checkForRowOfThree,
+    checkForMatches,
+    // checkForColumnOfFour,
+    // checkForRowOfFour,
+    // checkForColumnOfThree,
+    // checkForRowOfThree,
     moveIntoSpaceBelow,
     currentTileArrangement,
   ]);
 
   return (
-    <div className="app">
-      <GameHolder
-        currentTileArrangement={currentTileArrangement}
-        dragStart={dragStart}
-        dragDrop={dragDrop}
-        dragEnd={dragEnd}
-        touchStart={touchStart}
-        touchMove={touchMove}
-        touchEnd={touchEnd}
-        width={width}
-      />
-      <div>
-        <Scoreboard score={score} />
+    <div className="App">
+      <div className="gameBoard col-10">
+        <GameHolder
+          currentTileArrangement={currentTileArrangement}
+          dragStart={dragStart}
+          dragDrop={dragDrop}
+          dragEnd={dragEnd}
+          touchStart={touchStart}
+          touchMove={touchMove}
+          touchEnd={touchEnd}
+          tilesPerRowOrColumn={tilesPerRowOrColumn}
+        />
+        <div style={{ float: "right" }}>
+          <Scoreboard score={score} />
+        </div>
       </div>
     </div>
   );
 };
-
-export default App;

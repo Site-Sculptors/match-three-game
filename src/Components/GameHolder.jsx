@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Game } from "./Game";
 import BackgroundTile from "../Images/background-tile.png";
-import "../index.css";
+import "../Styles/gameHolder.css";
 
 export const GameHolder = ({
   currentTileArrangement,
   dragStart,
   dragDrop,
   dragEnd,
-  width,
+  tilesPerRowOrColumn,
 }) => {
   const [backgroundTileArrangement, setBackgroundTileArrangement] = useState(
     []
@@ -20,7 +20,7 @@ export const GameHolder = ({
 
   const createBackground = () => {
     const tiles = [];
-    for (let i = 0; i < width * width; i++) {
+    for (let i = 0; i < tilesPerRowOrColumn * tilesPerRowOrColumn; i++) {
       tiles.push(BackgroundTile);
     }
     setBackgroundTileArrangement(tiles);
@@ -36,7 +36,7 @@ export const GameHolder = ({
         dragStart={dragStart}
         dragDrop={dragDrop}
         dragEnd={dragEnd}
-        width={width}
+        tilesPerRowOrColumn={tilesPerRowOrColumn}
       />
     </div>
   );

@@ -1,0 +1,33 @@
+.scoreBoard {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 30px;
+  background-image: url("../Images/score-board.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100px;
+  width: 200px;
+  padding: 0px;
+  justify-content: center;
+  float: right !important;
+  padding: 0px;
+}
+
+.scoreDisplay {
+  color: red;
+  font-size: 40px;
+  vertical-align: middle;
+  line-height: 100px;
+  text-align: center;
+  justify-self: center;
+  margin: 0px;
+}
+
+@media (max-width: 1000px) {
+  .Scoreboard {
+    position: relative;
+    margin: 10px auto;
+    transform: none;
+  }
+}
